@@ -1,0 +1,365 @@
+BUILD SHEET — LEAN PROTOTYPE V1.1
+
+job:
+  job_id:
+  job_name:
+  objective:
+  requested_outcome:
+  factory_approved_chassis: attached for reference
+  job_site_root: /job_site
+  reference_materials:
+    - attached factory-approved chassis
+  active_run_docs:
+    - /job_site/factory-manual-v1.1.txt
+    - /job_site/foreman-manual-v1.1.txt
+    - /job_site/worker-execution-manual-v1.1.txt
+    - /job_site/build-sheet-[job_id].txt
+  target_runtime_or_module:
+  operator_notes:
+
+run_control:
+  control_interface: Factory Control Interface
+  execution_foreman: "Foreman A the Blueprint Foreman"
+  checksum_foreman: "Foreman B the Systems Foreman"
+  mode: single | parallel
+  total_planned_stages:
+  total_planned_passes:
+  repeat_run_test: yes | no
+  final_validator: Factory Control Interface
+
+output_rules:
+  mandatory_foreman_tag_block:
+    - job_id
+    - foreman
+    - current_stage
+    - current_pass
+    - next_stage
+    - next_owner
+    - passes_remaining
+    - status
+    - current_action
+  mandatory_foreman_execution_block:
+    - artifacts
+    - checkpoint_result
+    - handoff_instruction
+    - issue_if_patch_or_error
+  mandatory_worker_output:
+    - "[PROJECT | WORKER | STAGE | RESULT]"
+    - status
+    - artifacts
+    - summary
+    - issues_if_patch
+  stage_activity_log:
+    enabled: true
+    write_on:
+      - checkpoint
+      - merge_gate
+      - stage_complete
+      - patch_return
+    canonical_file_path: /job_site/stage_activity_log.txt
+  final_tps_report:
+    required: true
+    file_path: /job_site/TPS_REPORT.txt
+  run_record_root: /job_site
+
+stage_template:
+  stage_id:
+  stage_name:
+  stage_goal:
+  stage_owner:
+  inputs:
+    -
+  references:
+    -
+  worker_orders:
+    worker_a:
+      assigned: yes | no
+      task:
+      expected_artifacts:
+        -
+      repo_mirror_required: yes | no
+      commit_required: yes | no
+      push_required: yes | no
+      required_references:
+        - /job_site/factory-manual-v1.1.txt
+        - /job_site/worker-execution-manual-v1.1.txt
+        - /job_site/build-sheet-[job_id].txt
+    worker_b:
+      assigned: yes | no
+      task:
+      expected_artifacts:
+        -
+      repo_mirror_required: yes | no
+      commit_required: yes | no
+      push_required: yes | no
+      required_references:
+        - /job_site/factory-manual-v1.1.txt
+        - /job_site/worker-execution-manual-v1.1.txt
+        - /job_site/build-sheet-[job_id].txt
+  execution_notes:
+  checkpoint:
+    checkpoint_id:
+    condition:
+    required_artifacts:
+      -
+    pass_rule:
+    patch_rule:
+  merge_gate:
+    required: yes | no
+    merge_condition:
+    merge_artifacts:
+      -
+    checksum_owner: "Foreman B the Systems Foreman"
+    fail_return_to: "Foreman A the Blueprint Foreman"
+  stage_outputs:
+    required_artifacts:
+      -
+    required_log_entries:
+      - checkpoint result
+      - artifact snapshot
+      - current pass result
+  handoff:
+    on_pass:
+      next_stage:
+      next_owner:
+    on_patch:
+      return_stage:
+      return_owner:
+    on_error:
+      return_to: Factory Control Interface
+
+stages:
+  - stage_id: 1
+    stage_name:
+    stage_goal:
+    stage_owner: "Foreman A the Blueprint Foreman"
+    inputs:
+      - build_sheet
+      - attached reference materials
+    references:
+      - factory-approved chassis
+    worker_orders:
+      worker_a:
+        assigned: yes
+        task:
+        expected_artifacts:
+          -
+        repo_mirror_required: yes | no
+        commit_required: yes | no
+        push_required: yes | no
+        required_references:
+          - /job_site/factory-manual-v1.1.txt
+          - /job_site/worker-execution-manual-v1.1.txt
+          - /job_site/build-sheet-[job_id].txt
+      worker_b:
+        assigned: yes | no
+        task:
+        expected_artifacts:
+          -
+        repo_mirror_required: yes | no
+        commit_required: yes | no
+        push_required: yes | no
+        required_references:
+          - /job_site/factory-manual-v1.1.txt
+          - /job_site/worker-execution-manual-v1.1.txt
+          - /job_site/build-sheet-[job_id].txt
+    execution_notes:
+    checkpoint:
+      checkpoint_id:
+      condition:
+      required_artifacts:
+        -
+      pass_rule:
+      patch_rule:
+    merge_gate:
+      required: yes | no
+      merge_condition:
+      merge_artifacts:
+        -
+      checksum_owner: "Foreman B the Systems Foreman"
+      fail_return_to: "Foreman A the Blueprint Foreman"
+    stage_outputs:
+      required_artifacts:
+        -
+      required_log_entries:
+        - checkpoint result
+        - artifact snapshot
+        - current pass result
+    handoff:
+      on_pass:
+        next_stage:
+        next_owner:
+      on_patch:
+        return_stage:
+        return_owner:
+      on_error:
+        return_to: Factory Control Interface
+
+  - stage_id: 2
+    stage_name:
+    stage_goal:
+    stage_owner: "Foreman A the Blueprint Foreman"
+    inputs:
+      - prior stage artifacts
+      - /job_site/stage_activity_log.txt
+    references:
+      - attached reference materials
+    worker_orders:
+      worker_a:
+        assigned: yes | no
+        task:
+        expected_artifacts:
+          -
+        repo_mirror_required: yes | no
+        commit_required: yes | no
+        push_required: yes | no
+        required_references:
+          - /job_site/factory-manual-v1.1.txt
+          - /job_site/worker-execution-manual-v1.1.txt
+          - /job_site/build-sheet-[job_id].txt
+      worker_b:
+        assigned: yes | no
+        task:
+        expected_artifacts:
+          -
+        repo_mirror_required: yes | no
+        commit_required: yes | no
+        push_required: yes | no
+        required_references:
+          - /job_site/factory-manual-v1.1.txt
+          - /job_site/worker-execution-manual-v1.1.txt
+          - /job_site/build-sheet-[job_id].txt
+    execution_notes:
+    checkpoint:
+      checkpoint_id:
+      condition:
+      required_artifacts:
+        -
+      pass_rule:
+      patch_rule:
+    merge_gate:
+      required: yes | no
+      merge_condition:
+      merge_artifacts:
+        -
+      checksum_owner: "Foreman B the Systems Foreman"
+      fail_return_to: "Foreman A the Blueprint Foreman"
+    stage_outputs:
+      required_artifacts:
+        -
+      required_log_entries:
+        - checkpoint result
+        - artifact snapshot
+        - current pass result
+    handoff:
+      on_pass:
+        next_stage:
+        next_owner:
+      on_patch:
+        return_stage:
+        return_owner:
+      on_error:
+        return_to: Factory Control Interface
+
+  - stage_id: 3
+    stage_name:
+    stage_goal:
+    stage_owner: "Foreman A the Blueprint Foreman"
+    inputs:
+      - prior stage artifacts
+      - checksum returns
+    references:
+      - attached reference materials
+    worker_orders:
+      worker_a:
+        assigned: yes | no
+        task:
+        expected_artifacts:
+          -
+        repo_mirror_required: yes | no
+        commit_required: yes | no
+        push_required: yes | no
+        required_references:
+          - /job_site/factory-manual-v1.1.txt
+          - /job_site/worker-execution-manual-v1.1.txt
+          - /job_site/build-sheet-[job_id].txt
+      worker_b:
+        assigned: yes | no
+        task:
+        expected_artifacts:
+          -
+        repo_mirror_required: yes | no
+        commit_required: yes | no
+        push_required: yes | no
+        required_references:
+          - /job_site/factory-manual-v1.1.txt
+          - /job_site/worker-execution-manual-v1.1.txt
+          - /job_site/build-sheet-[job_id].txt
+    execution_notes:
+    checkpoint:
+      checkpoint_id:
+      condition:
+      required_artifacts:
+        -
+      pass_rule:
+      patch_rule:
+    merge_gate:
+      required: yes | no
+      merge_condition:
+      merge_artifacts:
+        -
+      checksum_owner: "Foreman B the Systems Foreman"
+      fail_return_to: "Foreman A the Blueprint Foreman"
+    stage_outputs:
+      required_artifacts:
+        -
+      required_log_entries:
+        - checkpoint result
+        - artifact snapshot
+        - current pass result
+    handoff:
+      on_pass:
+        next_stage: FINAL_VALIDATION
+        next_owner: Factory Control Interface
+      on_patch:
+        return_stage:
+        return_owner:
+      on_error:
+        return_to: Factory Control Interface
+
+final_validation:
+  performed_by: Factory Control Interface
+  required_inputs:
+    - completed stage artifacts
+    - /job_site/stage_activity_log.txt
+    - any merge records
+    - final build outputs
+  validation_checks:
+    - objective met
+    - outputs present
+    - checkpoints passed
+    - patch history reviewed
+    - repeat-run variance checked if enabled
+  outputs:
+    - completion_status
+    - /job_site/TPS_REPORT.txt
+    - recommendations_if_needed
+
+repeat_run_comparison:
+  enabled: yes | no
+  compare_against:
+    - artifact structure
+    - stage outcomes
+    - patch frequency
+    - checksum failures
+    - final output consistency
+  variance_note_required: yes
+
+completion:
+  success_condition:
+    - all declared stages completed
+    - all required artifacts present
+    - stage activity log present
+    - final validation completed
+    - TPS report generated
+  closeout_owner: Factory Control Interface
